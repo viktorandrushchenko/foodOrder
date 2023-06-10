@@ -1,12 +1,33 @@
 import { createWebHistory, createRouter } from "vue-router";
 // импорт компонентов
-import ListRestaurants from "./components/abiturient/ListAbiturients";
-import AddRestaurant from "./components/abiturient/AddAbiturient";
-import Restaurant from "./components/abiturient/Abiturient";
-import SearchRestaurants from "./components/abiturient/SearchAbiturients";
+import ListRestaurants from "./components/restaurant/ListRestaurants";
+import AddRestaurant from "./components/restaurant/AddRestaurant";
+import Restaurant from "./components/restaurant/ResTaurant";
+import SearchRestaurants from "./components/restaurant/SearchRestaurants";
+
+import Login from "./components/authorization/Login";
+import Register from "./components/authorization/Register";
+
+import store from "./store/index";
 
 // определяем маршруты
 const routes = [
+    {
+        path: "/login",
+        name: "login-user",
+        component: Login,
+        meta: {
+            title: "Вход в систему"
+        }
+    },
+    {
+        path: "/register",
+        name: "register-user",
+        component: Register,
+        meta: {
+            title: "Регистрация"
+        }
+    },
     {
         path: "/listRestaurants", // указание маршрута, по которому будем переходить к списку абитуриентов
         name: "restaurants", // имя маршрута
@@ -49,10 +70,29 @@ const router = createRouter({
 });
 
 // указание заголовка компонентам (тега title), заголовки определены в meta
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     // для тех маршрутов, для которых не определены компоненты, подключается только App.vue
     // поэтому устанавливаем заголовком по умолчанию название "Главная страница"
     document.title = to.meta.title || 'Главная страница';
-    next();
+
+    // проверяем наличие токена и срок его действия
+    const auth = await store.getters["auth/isTokenActive"];
+    if (auth) {
+        return next();
+    }
+    // если токена нет или его срок действия истёк, а страница доступна только авторизованному пользователю,
+    // то переходим на страницу входа в систему (ссылка на /login)
+    else if (!auth && to.meta.requiredAuth) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        await store.dispatch("auth/refreshToken", user)
+            .then(() => {
+                return next();
+            })
+            .catch(() => {
+                return next({path: "/login"});
+            });
+        return next({ path: "/login" });
+    }
+    return next();
 });
 export default router;
