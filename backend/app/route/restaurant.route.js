@@ -9,7 +9,7 @@ module.exports = (app) => {
 
     app.post('/api/addRestaurant', restaurant.create);
 
-    app.post('/api/updateRestaurant', restaurant.update);
+    app.post('/api/updateRestaurant/:id', restaurant.update);
 
-    app.post('/api/deleteRestaurant', restaurant.delete);
+    app.post('/api/deleteRestaurant/:id', restaurant.delete);
 };
