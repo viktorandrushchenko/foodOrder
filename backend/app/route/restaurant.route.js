@@ -12,4 +12,8 @@ module.exports = (app) => {
     app.post('/api/updateRestaurant/:id', restaurant.update);
 
     app.post('/api/deleteRestaurant/:id', restaurant.delete);
+    
+    app.get('/api/restaurant/name/:name', restaurant.findByName);
+
+    app.get('/api/restaurant/cuisine/:cuisine', restaurant.findByCuisine);
 };
