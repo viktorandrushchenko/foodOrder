@@ -39,6 +39,12 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE',
             sourceKey: 'id'
         });
+        Dish.hasMany(models.order_items, {
+            foreignKey: 'dish_id',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+            sourceKey: 'id'
+        });
     };
     return Dish;
 };
