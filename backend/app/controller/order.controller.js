@@ -47,7 +47,9 @@ exports.open = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Order.findAll()
+    Order.findAll({      
+        order: [['time_ordered', 'DESC']]
+    })
         .then(objects => {
             globalFunctions.sendResult(res, objects);
         })
@@ -70,7 +72,8 @@ exports.findByUser = (req, res) => {
     Order.findAll({
         where: {
             user_id: req.params.user_id,
-        }
+        },
+        order: [['time_ordered', 'DESC']]
     }).then(objects => {
         globalFunctions.sendResult(res, objects);
     }).catch(err => {
@@ -82,7 +85,8 @@ exports.findByRestaurant = (req, res) => {
     Order.findAll({
         where: {
             restaurant_id: req.params.restaurant_id,
-        }
+        },
+        order: [['time_ordered', 'DESC']]
     }).then(objects => {
         globalFunctions.sendResult(res, objects);
     }).catch(err => {
