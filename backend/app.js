@@ -30,5 +30,8 @@ dish(app);
 var cart = require('./app/route/cart.route.js');
 cart(app);
 
+var order = require('./app/route/order.route.js');
+order(app);
+
 var auth = require('./app/route/auth.route.js');
 auth(app);
