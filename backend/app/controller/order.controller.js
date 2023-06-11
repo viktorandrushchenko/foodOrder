@@ -47,7 +47,14 @@ exports.open = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Order.findAll({      
+    Order.findAll({    
+        attributes: [
+            'id',
+            'user_id',
+            'restaurant_id',
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('time_ordered'), '%Y-%m-%d %H:%i:%s'), 'time_ordered'],
+            'fulfilled',
+        ],  
         order: [['time_ordered', 'DESC']]
     })
         .then(objects => {
@@ -70,6 +77,13 @@ exports.findById = (req, res) => {
 
 exports.findByUser = (req, res) => {
     Order.findAll({
+        attributes: [
+            'id',
+            'user_id',
+            'restaurant_id',
+            [Sequelize.fn('DATE_FORMAT', Sequelize.col('time_ordered'), '%Y-%m-%d %H:%i:%s'), 'time_ordered'],
+            'fulfilled',
+        ],
         where: {
             user_id: req.params.user_id,
         },
