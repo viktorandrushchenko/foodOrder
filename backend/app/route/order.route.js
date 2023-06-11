@@ -5,6 +5,8 @@ module.exports = (app) => {
     // Получение всех пользователей
     app.post('/api/openCart/:user_id/:restaurant_id', order.open);
     
+    app.post('/api/OrderReady/:id', order.ready);
+    
     app.get('/api/Orders', order.findAll);
     
     app.get('/api/order/:id', order.findById);

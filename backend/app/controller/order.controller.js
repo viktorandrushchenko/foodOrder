@@ -89,3 +89,19 @@ exports.findByRestaurant = (req, res) => {
         globalFunctions.sendError(res, err);
     })
 };
+
+exports.ready = (req, res) => {
+    Order.update({
+        fulfilled: true,
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+    ).then(object => {
+        globalFunctions.sendResult(res, object);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
