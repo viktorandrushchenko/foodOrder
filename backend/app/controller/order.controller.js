@@ -39,6 +39,7 @@ exports.open = (req, res) => {
                     globalFunctions.sendError(res, err);
                 }) 
             }
+            globalFunctions.sendResult(res, object);
         });
     }).catch(err => {
         globalFunctions.sendError(res, err);
