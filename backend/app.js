@@ -27,5 +27,8 @@ restaurant(app);
 var dish = require('./app/route/dish.route.js');
 dish(app);
 
+var cart = require('./app/route/cart.route.js');
+cart(app);
+
 var auth = require('./app/route/auth.route.js');
 auth(app);

@@ -14,4 +14,6 @@ module.exports = (app) => {
     app.post('/api/deleteDish/:id', dish.delete);
     
     app.get('/api/dish/restaurant_id/:restaurant_id', dish.findByRestaurant);
+    
+    app.get('/api/dish/name_restaurant_id/:restaurant_id/:name', dish.findByNameAndRestaurant);
 };

@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
+            quantity: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
         });
 
     // Определяем связи таблицы university с другими таблицами

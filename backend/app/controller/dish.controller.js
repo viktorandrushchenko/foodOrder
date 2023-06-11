@@ -1,6 +1,9 @@
 var db = require('../config/db.config.js');
 var Dish = db.dish;
 var globalFunctions = require('../config/global.functions.js');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 exports.findAll = (req, res) => {
     Dish.findAll()
@@ -71,6 +74,21 @@ exports.findByRestaurant = (req, res) => {
     Dish.findAll({
         where: {
             restaurant_id: req.params.restaurant_id
+        }
+    }).then(objects => {
+        globalFunctions.sendResult(res, objects);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
+
+exports.findByNameAndRestaurant = (req, res) => {
+    Dish.findAll({
+        where: {
+            restaurant_id: req.params.restaurant_id,
+            name: {
+                [Op.like]: req.params.name + '%'
+            }
         }
     }).then(objects => {
         globalFunctions.sendResult(res, objects);
