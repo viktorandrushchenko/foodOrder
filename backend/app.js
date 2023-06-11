@@ -33,5 +33,8 @@ cart(app);
 var order = require('./app/route/order.route.js');
 order(app);
 
+var order_items = require('./app/route/order_items.route.js');
+order_items(app);
+
 var auth = require('./app/route/auth.route.js');
 auth(app);

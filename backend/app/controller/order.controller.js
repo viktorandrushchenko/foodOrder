@@ -44,3 +44,47 @@ exports.open = (req, res) => {
         globalFunctions.sendError(res, err);
     })
 };
+
+exports.findAll = (req, res) => {
+    Order.findAll()
+        .then(objects => {
+            globalFunctions.sendResult(res, objects);
+        })
+        .catch(err => {
+            globalFunctions.sendError(res, err);
+        })
+};
+
+exports.findById = (req, res) => {
+    Order.findByPk(req.params.id)
+        .then(object => {
+            globalFunctions.sendResult(res, object);
+        })
+        .catch(err => {
+            globalFunctions.sendError(res, err);
+        })
+};
+
+exports.findByUser = (req, res) => {
+    Order.findAll({
+        where: {
+            user_id: req.params.user_id,
+        }
+    }).then(objects => {
+        globalFunctions.sendResult(res, objects);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
+
+exports.findByRestaurant = (req, res) => {
+    Order.findAll({
+        where: {
+            restaurant_id: req.params.restaurant_id,
+        }
+    }).then(objects => {
+        globalFunctions.sendResult(res, objects);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
