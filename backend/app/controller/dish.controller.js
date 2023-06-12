@@ -96,3 +96,37 @@ exports.findByNameAndRestaurant = (req, res) => {
         globalFunctions.sendError(res, err);
     })
 };
+
+exports.upload = (req, res) => {
+    Dish.update({
+        image: req.file.buffer,
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+    ).then(object => {
+        globalFunctions.sendResult(res, object);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
+
+exports.getImage = (req, res) => {
+    Dish.findAll({
+        attributes: ['image'],
+        where: {
+            id: req.params.id
+        }
+    }).then(objects => {
+        const imageBuffer = result.image;
+        res.writeHead(200, {
+            'Content-Type': 'image/jpeg', // указываем тип контента
+            'Content-Length': imageBuffer.length // указываем длину контента
+          });
+        res.end(imageBuffer); // отправляем изображение клиенту
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
