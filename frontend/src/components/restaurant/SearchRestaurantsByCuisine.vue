@@ -1,9 +1,9 @@
 <template> 
     <div> 
-      <h4 class="mb-3">Поиск ресторанов по названию</h4> 
+      <h4 class="mb-3">Поиск ресторанов по типу кухни</h4> 
       <form @submit="searchRestaurants" class="form-inline mb-3"> 
         <div class="form-group mr-3"> 
-          <input type="text" name="name" id="name" class="form-control" placeholder="Название" required v-model="name"> 
+          <input type="text" name="name" id="name" class="form-control" placeholder="кухня" required v-model="cuisine"> 
         </div> 
         <button type="submit" class="btn btn-primary">Поиск</button> 
       </form> 
@@ -32,7 +32,7 @@
         name: "SearchAbiturients",
         data() {
             return {
-                name: "",
+                cuisine: "",
                 restaurants: [],
                 noDataFound: false
             };
@@ -41,7 +41,7 @@
             searchRestaurants(e) {
                 e.preventDefault(); // запрет отправки формы, так как обрабатывать будем с помощью методов axios
                 http
-                    .get("/restaurant/name/" + this.name)
+                    .get("/restaurant/cuisine/" + this.cuisine)
                     .then(response => {
                         if (response.data.length > 0){
                             this.restaurants = response.data;

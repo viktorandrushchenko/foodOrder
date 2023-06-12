@@ -5,7 +5,7 @@
         <form name="form" @submit="handleRegister">
           <div v-if="!successful">
             <div class="form-group">
-              <input type="text" class="form-control mb-3" name="lastname" placeholder="Фамилия" v-model="user.name" required/>
+              <input type="text" class="form-control mb-3" name="lastname" placeholder="Имя" v-model="user.name" required/>
             </div>
             <div class="form-group">
               <input type="text" class="form-control mb-3" name="email" placeholder="Электронная почта" v-model="user.email" required/>

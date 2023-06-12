@@ -8,15 +8,21 @@
               Рестораны
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/listTickets" class="nav-link">
-              Корзина
+          <li v-if="currentUser && currentUser.role != 'Администратор'" class="nav-item">
+            <router-link to="/listOrders" class="nav-link">
+              Мои заказы
+            </router-link>
+          </li>
+          <li v-if="currentUser && currentUser.role == 'Администратор'" class="nav-item">
+            <router-link to="/listAllOrders" class="nav-link">
+              Все заказы
             </router-link>
           </li>
         </ul>
 
         <div v-if="currentUser" class="ms-auto">
           <div class="d-flex align-items-center">
+             <span class="text-light mx-3">{{ currentUser.email }}</span>
               <button class="btn btn-light" @click.prevent="logOut">
                 Выйти
               </button>

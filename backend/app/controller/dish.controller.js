@@ -120,7 +120,9 @@ exports.getImage = (req, res) => {
             id: req.params.id
         }
     }).then(objects => {
-        const imageBuffer = result.image;
+        const imageBuffer = objects[0].image;
+        console.log("AAAAAAAAAAAAAAAAAAAAaaa");
+        console.log(imageBuffer);
         res.writeHead(200, {
             'Content-Type': 'image/jpeg', // указываем тип контента
             'Content-Length': imageBuffer.length // указываем длину контента
@@ -130,3 +132,4 @@ exports.getImage = (req, res) => {
         globalFunctions.sendError(res, err);
     })
 };
+
