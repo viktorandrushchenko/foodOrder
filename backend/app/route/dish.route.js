@@ -33,4 +33,19 @@ module.exports = (app) => {
           res.send('Image uploaded successfully');
         });
       });
+
+      app.get('/api/dish/image/:id', (req, res) => {
+        const id = req.params.id; // получаем id записи, из которой нужно получить изображение
+      
+        // получаем изображение из базы данных
+        db.query('SELECT image FROM dish WHERE id = ?', [id], (err, result) => {
+          if (err) throw err;
+          const image = result[0].image; // получаем буфер изображения из результата запроса
+          res.writeHead(200, {
+            'Content-Type': 'image/jpeg', // указываем тип контента
+            'Content-Length': image.length // указываем длину контента
+          });
+          res.end(image); // отправляем изображение клиенту
+        });
+      });
 };
