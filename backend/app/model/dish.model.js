@@ -24,6 +24,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
+            image: {
+                type: Sequelize.BLOB,
+                allowNull: true
+            },
         });
 
     // Определяем связи таблицы university с другими таблицами
