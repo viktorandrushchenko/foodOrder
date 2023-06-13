@@ -12,11 +12,11 @@
                     <div class="fw-bold">Ресторан: {{ restaurants[order.restaurant_id]?.name }}</div>    
                     <div class="small">Время заказа: {{ order.time_ordered }}</div>   
                     <div class="small">Готовность: {{ order.fulfilled == 1 ? "Готов" : "Не готов" }}
-                        
+                        <button v-if="!order.fulfilled" class="btn btn-success btn-sm mx-3" @click="readyOrder(order.id)">Готов</button>      
                     </div>                                               
                 </div>                   
                 </router-link>  
-                <button v-if="!order.fulfilled" class="btn btn-success btn-sm mx-3" @click="readyOrder(order.id)">Готов</button>           
+                         
             </li>    
         </ul>
       </div> 

@@ -25,7 +25,7 @@ module.exports = (sequelize, Sequelize) => {
                 allowNull: false
             },
             image: {
-                type: Sequelize.BLOB,
+                type: Sequelize.BLOB('medium'),
                 allowNull: true
             },
         });

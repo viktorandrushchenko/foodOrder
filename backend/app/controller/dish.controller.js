@@ -99,7 +99,7 @@ exports.findByNameAndRestaurant = (req, res) => {
 
 exports.upload = (req, res) => {
     Dish.update({
-        image: req.file.buffer,
+        image: req.body.image,
         },
         {
             where: {

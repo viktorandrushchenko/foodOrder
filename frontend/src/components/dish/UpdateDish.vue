@@ -16,6 +16,10 @@
               <label for="cuisine" class="form-label">Цена</label> 
               <input type="text" class="form-control" id="cuisine" name="cuisine" placeholder="Введите тип кухни" required v-model="dish.price"> 
             </div> 
+
+              <input type="file" name="image" ref="myInputRef">
+              <input type="submit" value="Upload" v-on:click="updateImg">
+
             <button type="button" class="btn btn-primary me-3" v-on:click="updateDish">Изменить</button>  
           </form> 
         </div> 
@@ -71,7 +75,21 @@ import http from "../../http-common"; // подключение объекта, 
                   .catch(e => {
                     console.log(e);
                   });
-            },        
+            },    
+            updateImg(e) {
+              e.preventDefault();
+              const fileInput = this.$refs.myInputRef.files[0]; // получаем файл из элемента input
+              const data = new FormData();
+              data.append('image', fileInput); // добавляем файл в объект FormData
+
+              http.post(`/dish/upload/${this.dishId}`, data)
+                .then(() => {
+                  this.$router.push({ name: 'restaurant-details', params: { id: this.restId } });
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            },  
         },
         mounted() {
             this.getDish();

@@ -13,17 +13,18 @@
         <div class="row"> 
           <div class="col-md-3" v-for="(dish, index) in dishes" :key="index"> 
             <div class="card mb-3"> 
-              <div class="card-body"> 
-                <h5 class="card-title fw-bold">{{ dish.name }}</h5> 
-                <p class="card-text">{{ dish.description }}</p> 
-                <p class="card-text">{{ dish.price }} р.</p> 
-                <img :src="image" >
-                <div class="mb-3" v-if="currentUser && currentUser.role == 'Администратор'">   
-                  <button class="btn btn-danger btn-sm mx-3" @click="deleteDish(dish.id)">Удалить</button>  
-                  <router-link class="btn btn-primary btn-sm mx-3" :to="{ name: 'editDish', params: { id: dish.id, restId: restaurantId }}">Изменить</router-link>    
-                </div>    
-                <button v-if="currentUser && currentUser.role != 'Администратор'" class="btn btn-success btn-sm mx-3" @click="addToCart(dish.id)">Добавить в корзину</button> 
-              </div> 
+              <div class="card-body">  
+                <img class="card-img-top mb-3" :src="`http://localhost:3000/api/dish/image/${dish.id}`" style="max-height: 400px; object-fit: cover; object-position: center;" alt="Picture of {{ dish.name }}"> 
+                <h5 class="card-title fw-bold">{{ dish.name }}</h5>  
+                <p class="card-text">{{ dish.description }}</p>  
+                <p class="card-text">{{ dish.price }} р.</p>  
+                
+                <div class="mb-3" v-if="currentUser && currentUser.role == 'Администратор'">    
+                  <button class="btn btn-danger btn-sm me-2" @click="deleteDish(dish.id)">Удалить</button>   
+                  <router-link class="btn btn-primary btn-sm" :to="{ name: 'editDish', params: { id: dish.id, restId: restaurantId }}">Изменить</router-link>     
+                </div>     
+                <button v-if="currentUser && currentUser.role != 'Администратор'" class="btn btn-success btn-sm mt-2" @click="addToCart(dish.id)">Добавить в корзину</button>  
+              </div>
             </div> 
           </div> 
         </div>   
@@ -39,7 +40,6 @@
         data() { // данные компонента (определение переменных)
             return {
                 dishes: [],
-                image: ""
             };
         },
         computed: { // вычисляемые свойства
@@ -51,18 +51,6 @@
             }
         },
         methods: { 
-          getImg() {
-            http
-              .get("/dish/image/" + 1)
-              .then(response => {
-                const blob = new Blob([response.data], { type: response.headers['content-type'] });
-                const url = URL.createObjectURL(blob);
-                this.image = url;
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          },
           addToCart(id) {
             var data = {
                     user_id: this.currentUser.id,
@@ -106,7 +94,6 @@
         },
         mounted() { // загружаем данные абитуриентов. Обработчик mounted() вызывается после монтирования экземпляра шаблона
             this.getDishes();
-            this.getImg();
         }
     }
 </script>

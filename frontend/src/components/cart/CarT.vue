@@ -8,9 +8,9 @@
             <li v-for="(cart, index) in carts" :key="index" class="list-group-item d-flex justify-content-between align-items-start">      
                 <div class="ms-2 me-auto">    
                     <div class="fw-bold">Блюдо: {{ dishes[cart.dish_id]?.name }}</div>    
-                    <div class="small">Количество: {{ cart.quantity }}</div>   
-                    <button class="btn btn-danger btn-sm mx-3" @click="deleteDish(cart.dish_id)">-</button>     
-                    <button class="btn btn-success btn-sm mx-3" @click="addDish(cart.dish_id)">+</button>                               
+                    <div class="small">Количество:  <button class="btn btn-danger btn-sm mx-3" @click="deleteDish(cart.dish_id)">-</button> {{ cart.quantity }}    
+                    <button class="btn btn-success btn-sm mx-3" @click="addDish(cart.dish_id)">+</button> </div>   
+                                                  
                 </div>                                              
             </li>    
         </ul>
